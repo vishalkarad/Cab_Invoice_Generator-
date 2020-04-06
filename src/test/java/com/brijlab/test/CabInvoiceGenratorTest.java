@@ -1,5 +1,6 @@
 package com.brijlab.test;
 import com.brijlab.service.CabInvoiceGeneratorMain;
+import com.brijlab.service.NoumberOfRide;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,5 +27,13 @@ public class CabInvoiceGenratorTest {
         double distance = 0.1;
         double fare = cabInvoiceGenerator.calculateFare(distance,time);
         Assert.assertEquals(5,fare,0.0);
+    }
+    @Test
+    public void givenDistanceAndTime_InvoiceGeneratorGenerateFare_ShouldReturnMinimumFareForJourney() {
+        int time = 3;
+        double distance = 0.1;
+        NoumberOfRide rides[] = {new NoumberOfRide(2.0, 5),new NoumberOfRide(2.0, 5)};
+        double totalFare = cabInvoiceGenerator.calculateFare(rides);
+        Assert.assertEquals(25 , totalFare, 0);
     }
 }
