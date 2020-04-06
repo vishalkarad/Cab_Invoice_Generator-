@@ -15,11 +15,11 @@ public class CabInvoiceGeneratorMain {
         return totalFare;
     }
 
-    public double calculateFare(NoumberOfRide[] rides) {
-        double toalFare = 0;
+    public InvoiceSummary calculateFare(NoumberOfRide[] rides) {
+        double totalFare = 0;
         for (NoumberOfRide ride : rides) {
-            return toalFare = toalFare + this.calculateFare(ride.distance,ride.time);
+            totalFare += this.calculateFare(ride.distance,ride.time);
         }
-        return toalFare;
+        return new InvoiceSummary(rides.length,totalFare);
     }
 }
