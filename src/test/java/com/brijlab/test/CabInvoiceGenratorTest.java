@@ -9,11 +9,8 @@ import org.junit.Test;
 public class CabInvoiceGenratorTest {
 
     // Main class object
-    CabInvoiceGeneratorMain cabInvoiceGenerator = null;
-    @Before
-    public void settUp()throws Exception{
-        cabInvoiceGenerator = new CabInvoiceGeneratorMain();
-    }
+    CabInvoiceGeneratorMain cabInvoiceGenerator = new CabInvoiceGeneratorMain();
+
     @Test
     public void welcomeMesage() {
         CabInvoiceGeneratorMain cabInvoiceGeneratorMain = new CabInvoiceGeneratorMain();
@@ -26,7 +23,6 @@ public class CabInvoiceGenratorTest {
         double fare = cabInvoiceGenerator.calculateFare(distance,time);
         Assert.assertEquals(60,fare,0.0);
     }
-
     @Test
     public void givenDistanceAndTime_WhenMnimumFare_ReturnTrue() {
         int time = 0;
@@ -46,8 +42,18 @@ public class CabInvoiceGenratorTest {
         String userId = "Vishal#abc";
         NoumberOfRide rides[] = {new NoumberOfRide(2.0, 5),new NoumberOfRide(0.1, 1)};
         cabInvoiceGenerator.addRides(userId,rides);
-        InvoiceSummary summary = cabInvoiceGenerator.getInvoiceSummary(userId);
+        InvoiceSummary summary = cabInvoiceGenerator.CabInvoiceGeneratorMain(userId);
         InvoiceSummary expectedSumry = new InvoiceSummary(2,30.0);
+        Assert.assertEquals(summary,expectedSumry);
+    }
+    @Test
+    public void givenCategories_WhenRideList_ShouldReturnInvoiceSummary() {
+        String userId = "Vishal#abc";
+        NoumberOfRide rides[] = {new NoumberOfRide(2.0, 5),new NoumberOfRide(0.1, 1)};
+        NoumberOfRide rides1[] = {new NoumberOfRide(2.0, 5),new NoumberOfRide(0.1, 1)};
+        cabInvoiceGenerator.addRides(userId,rides);
+        InvoiceSummary summary = cabInvoiceGenerator.CabInvoiceGeneratorMain(userId,CabInvoiceGeneratorMain.RideCategories.PREMIUM_RIDE);
+        InvoiceSummary expectedSumry = new InvoiceSummary(2,60.0);
         Assert.assertEquals(summary,expectedSumry);
     }
 }
