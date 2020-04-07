@@ -1,24 +1,26 @@
 package com.brijlab.service;
 public class CabInvoiceGeneratorMain {
 
-    private static final double COST_PER_KILOMETER = 10;
-    private static final int COST_PER_MINUTE = 1;
-    private static final int MINIMUM_FARE = 5;
     private RideRepository rideRepository;
-
 
     public static void main(String[] args) {
         System.out.println("*************** Welcome to Cab Invoice Generator ***************");
     }
 
+    public enum RideCategories{
+        NORMAL_RIDE,PREMIUM_RIDE;
+    }
+    RideCategories rideCategories;
+
+    public CabInvoiceGeneratorMain(RideCategories premiumRide) {
+        this.rideCategories = premiumRide;
+    }
     public CabInvoiceGeneratorMain() {
         this.rideRepository = new RideRepository();
     }
 
     public double calculateFare(double distance, int time) {
-        double totalFare = distance * COST_PER_KILOMETER + time * COST_PER_MINUTE;
-        if (totalFare <= MINIMUM_FARE)
-            return MINIMUM_FARE;
+        double totalFare = CabInvoiceFactory.givenRideType(distance,time,rideCategories);
         return totalFare;
     }
 
@@ -34,7 +36,11 @@ public class CabInvoiceGeneratorMain {
         rideRepository.addRides(userId,rides);
     }
 
-    public InvoiceSummary getInvoiceSummary(String userId) {
+    public InvoiceSummary CabInvoiceGeneratorMain(String userId,RideCategories premiumRide) {
+        this.rideCategories = premiumRide;
+        return this.calculateFare(rideRepository.getRides(userId));
+    }
+    public InvoiceSummary CabInvoiceGeneratorMain(String userId) {
         return this.calculateFare(rideRepository.getRides(userId));
     }
 }
